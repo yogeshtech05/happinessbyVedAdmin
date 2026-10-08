@@ -1,0 +1,70 @@
+# ==============================================================================
+# HAPPINESS DELIVER ADMIN - GITIGNORE
+# ==============================================================================
+
+# Dependencies
+/node_modules
+/.pnpm
+/.yarn
+/pnpm-store
+
+# Next.js Build Outputs
+/.next/
+/out/
+/build/
+/dist/
+/.turbo/
+
+# Environment Variables & Secrets (Keep .env.example tracked)
+.env
+.env*.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+
+# Embedded Database & Local Data Storage
+/.data/
+/*.db
+/*.sqlite
+/*.sqlite-journal
+
+# Logs & Debugging
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+/logs/
+
+# IDE & Code Editor Files
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+.project
+.settings/
+
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Testing & Code Coverage
+/coverage/
+/.nyc_output/
+
+# TypeScript & Temporary Files
+*.tsbuildinfo
+next-env.d.ts
+/scratch/
+/tmp/
+/temp/
