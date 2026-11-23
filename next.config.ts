@@ -1,8 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: { useTypeScriptCli: false },
   reactStrictMode: true,
-  serverExternalPackages: ["@electric-sql/pglite", "pg", "bcryptjs"],
   images: {
     remotePatterns: [
       {

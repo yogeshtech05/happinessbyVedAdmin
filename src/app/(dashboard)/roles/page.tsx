@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
@@ -23,7 +23,7 @@ export default function RolesPage() {
 
   const { showToast } = useToast();
 
-  const fetchRoles = async () => {
+  const fetchRoles = useCallback(async () => {
     setLoading(true);
     setError("");
     const res = await apiRequest("/api/roles");
@@ -37,11 +37,11 @@ export default function RolesPage() {
       setError(res.error || "Failed to load RBAC roles.");
     }
     setLoading(false);
-  };
+  }, [selectedRole]);
 
   useEffect(() => {
     fetchRoles();
-  }, []);
+  }, [fetchRoles]);
 
   const handleSelectRole = (role: any) => {
     setSelectedRole(role);

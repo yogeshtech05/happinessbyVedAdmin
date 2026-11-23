@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/Table";
@@ -21,7 +21,7 @@ export default function ReportsPage() {
 
   const { showToast } = useToast();
 
-  const fetchReports = async () => {
+  const fetchReports = useCallback(async () => {
     setLoading(true);
     setError("");
     const res = await apiRequest(`/api/reports?range=${range}`);
@@ -31,11 +31,11 @@ export default function ReportsPage() {
       setError(res.error || "Failed to generate report.");
     }
     setLoading(false);
-  };
+  }, [range]);
 
   useEffect(() => {
     fetchReports();
-  }, [range]);
+  }, [fetchReports]);
 
   const handleExportCSV = () => {
     if (!reportData) return;

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/Table";
 import { Badge } from "@/components/ui/Badge";
@@ -28,7 +28,7 @@ export default function PackagesPage() {
 
   const { showToast } = useToast();
 
-  const fetchPackages = async () => {
+  const fetchPackages = useCallback(async () => {
     setLoading(true);
     setError("");
     const query = new URLSearchParams({ search, occasion: occasionFilter });
@@ -39,11 +39,11 @@ export default function PackagesPage() {
       setError(res.error || "Failed to fetch packages.");
     }
     setLoading(false);
-  };
+  }, [search, occasionFilter]);
 
   useEffect(() => {
     fetchPackages();
-  }, [search, occasionFilter]);
+  }, [fetchPackages]);
 
   const handleDeletePackage = async () => {
     if (!deleteModalId) return;

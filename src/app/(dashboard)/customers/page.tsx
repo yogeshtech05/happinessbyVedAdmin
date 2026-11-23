@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/Table";
 import { Badge } from "@/components/ui/Badge";
@@ -20,7 +20,7 @@ export default function CustomersPage() {
   const [error, setError] = useState("");
   const [search, setSearch] = useState("");
 
-  const fetchCustomers = async () => {
+  const fetchCustomers = useCallback(async () => {
     setLoading(true);
     setError("");
     const query = new URLSearchParams({ search });
@@ -31,11 +31,11 @@ export default function CustomersPage() {
       setError(res.error || "Failed to load customers.");
     }
     setLoading(false);
-  };
+  }, [search]);
 
   useEffect(() => {
     fetchCustomers();
-  }, [search]);
+  }, [fetchCustomers]);
 
   return (
     <div className="space-y-6 animate-fade-in pb-12">

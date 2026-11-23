@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/Table";
 import { Badge } from "@/components/ui/Badge";
@@ -32,7 +32,7 @@ export default function DeliveriesPage() {
 
   const { showToast } = useToast();
 
-  const fetchDeliveries = async () => {
+  const fetchDeliveries = useCallback(async () => {
     setLoading(true);
     setError("");
     const query = new URLSearchParams({ search, status: statusFilter });
@@ -43,11 +43,11 @@ export default function DeliveriesPage() {
       setError(res.error || "Failed to load deliveries.");
     }
     setLoading(false);
-  };
+  }, [search, statusFilter]);
 
   useEffect(() => {
     fetchDeliveries();
-  }, [search, statusFilter]);
+  }, [fetchDeliveries]);
 
   const handleOpenAssignModal = (del: any) => {
     setSelectedDel(del);

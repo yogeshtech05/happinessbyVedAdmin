@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/Table";
 import { Badge } from "@/components/ui/Badge";
@@ -41,7 +41,7 @@ export default function ProductsPage() {
 
   const { showToast } = useToast();
 
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     setLoading(true);
     setError("");
     const query = new URLSearchParams({ search, category: categoryFilter });
@@ -52,11 +52,11 @@ export default function ProductsPage() {
       setError(res.error || "Failed to load products.");
     }
     setLoading(false);
-  };
+  }, [search, categoryFilter]);
 
   useEffect(() => {
     fetchProducts();
-  }, [search, categoryFilter]);
+  }, [fetchProducts]);
 
   const handleOpenCreate = () => {
     setEditingProd(null);

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, use } from "react";
+import React, { useCallback, useEffect, useState, use } from "react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/Table";
@@ -24,7 +24,7 @@ export default function CustomerDetailPage({ params }: { params: Promise<{ id: s
 
   const { showToast } = useToast();
 
-  const fetchCustomerDetail = async () => {
+  const fetchCustomerDetail = useCallback(async () => {
     setLoading(true);
     setError("");
     const res = await apiRequest(`/api/customers/${id}`);
@@ -34,11 +34,11 @@ export default function CustomerDetailPage({ params }: { params: Promise<{ id: s
       setError(res.error || "Customer profile not found.");
     }
     setLoading(false);
-  };
+  }, [id]);
 
   useEffect(() => {
     fetchCustomerDetail();
-  }, [id]);
+  }, [fetchCustomerDetail]);
 
   const toggleCustomerBlock = async () => {
     if (!data?.customer) return;

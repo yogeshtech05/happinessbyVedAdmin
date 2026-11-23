@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, use } from "react";
+import React, { useCallback, useEffect, useState, use } from "react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
@@ -46,7 +46,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
 
   const { showToast } = useToast();
 
-  const fetchOrderDetail = async () => {
+  const fetchOrderDetail = useCallback(async () => {
     setLoading(true);
     setError("");
     const res = await apiRequest(`/api/orders/${id}`);
@@ -58,11 +58,11 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
       setError(res.error || "Order not found");
     }
     setLoading(false);
-  };
+  }, [id]);
 
   useEffect(() => {
     fetchOrderDetail();
-  }, [id]);
+  }, [fetchOrderDetail]);
 
   const handleUpdateStatus = async (e: React.FormEvent) => {
     e.preventDefault();
